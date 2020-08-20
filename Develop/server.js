@@ -29,3 +29,11 @@ app.get('/api/notes', function(req, res){
 });
 
 // POST /api/notes - Should receive a new note to save on the request body, add it to the db.json file, and then return the new note to the client.
+app.post('api/notes', function(req, res) {
+
+    var newNote = req.body;
+        newNote.title = newNote.title.replace(/\s+/g, '').toLowerCase();
+    console.log(newNote);
+    notes.push(newNote);
+    
+})
