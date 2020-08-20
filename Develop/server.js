@@ -9,19 +9,19 @@ var app = express();
 var PORT = process.env.PORT || 8080;
 
 // Set up Express app to handle data parsing
-app.use(express.urlencoded({extend: true}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 
 
 // GET /notes - Should return the notes.html file.
 app.get('/notes', function(req, res) {
-    res.sendFile(path.join(__dirname, "notes.html"));
+    res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
 
 // GET * - Should return the index.html file
-app.get('*', function(req,res){
-    res.sendFile(path.join(__dirname, "index.html"));
+app.get('/', function(req,res){
+    res.sendFile(path.join(__dirname, "./public/index.html"));
 })
 
 // API routes should be created
@@ -40,8 +40,10 @@ app.post('api/notes', function(req, res) {
 
 })
 
+// DELETE /api/notes/:id - Should receive a query parameter containing the id of a note to delete. This means you'll need to find a way to give each note a unique id when it's saved. In order to delete a note, you'll need to read all notes from the db.json file, remove the note with the given id property, and then rewrite the notes to the db.json file.
+
 
 // Added port listener
 app.listen(PORT, function () {
-    console.log("listening on: http://localhost:", PORT);
+    console.log("listening on: http://localhost:" + PORT);
 })
