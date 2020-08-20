@@ -11,3 +11,7 @@ var PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({extend: true}));
 app.use(express.json());
 
+// GET /notes - Should return the notes.html file.
+app.get('/notes', function(req, res) {
+    res.sendFile(path.join(__dirname, "notes.html"));
+});
