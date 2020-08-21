@@ -1,6 +1,6 @@
 // Establish Dependencies
 var express = require("express");
-var fs = require("fs");
+var path = require("path");
 
 // Create express server
 var app = express();
@@ -15,14 +15,15 @@ app.use(express.json());
 
 
 // GET /notes - Should return the notes.html file.
-app.get('/notes', function(req, res) {
+app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "notes.html"));
-});
+  });
+
 
 // GET * - Should return the index.html file
-app.get('/', function(req,res){
+app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "index.html"));
-})
+  });
 
 // API routes should be created
 // GET /api/notes - Should read the db.json file and return all saved notes as JSON
@@ -34,6 +35,7 @@ app.get('/api/notes', function(req, res){
 app.post('api/notes', function(req, res) {
 
     var newNote = req.body;
+
         newNote.title = newNote.title.replace(/\s+/g, '').toLowerCase();
     console.log(newNote);
     notes.push(newNote);
