@@ -1,23 +1,13 @@
-// Establish Dependencies
-var express = require("express");
-var path = require("path");
-
-// Create express server
+var express = require('express');
 var app = express();
-
-// Set initial port
 var PORT = process.env.PORT || 8080;
 
-// Set up Express app to handle data parsing
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-// Routes
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
+require('./routes/apiRoutes');
+require('./routes/htmlRoutes');
 
-
-// Added port listener
-app.listen(PORT, function () {
-    console.log("listening on: http://localhost:" + PORT);
+app.listen(PORT, function() {
+    console.log("Esta aplicacion esta usando el puerto " + PORT + " y esta disponible en http://localhost:" + PORT);
 })
