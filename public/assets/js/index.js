@@ -48,22 +48,27 @@ const renderActiveNote = () => {
     $noteTitle.val("");
     $noteText.val("");
   }
+
+  
 };
 
 // Get the n"tesote data from the inputs, save it to the db and update the view
 const handleNoteSave = function () {
+
 console.log("testing")
   const newNote = {
-    id: Math.floor(Math.random() * 10),
+    id: Math.floor(Math.random() * 1000),
     title: $noteTitle.val(),
     text: $noteText.val()
   };
   console.log("testing")
-
+  
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();
+    
   });
+
   
 };
 
@@ -82,6 +87,7 @@ const handleNoteDelete = function (event) {
     getAndRenderNotes();
     renderActiveNote();
   });
+  
 };
 
 // Sets the activeNote and displays it
@@ -138,14 +144,19 @@ const renderNoteList = (notes) => {
   });
 
   $noteList.append(noteListItems);
+  
 };
 
 // Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => {
   return getNotes().then(renderNoteList);
+  
 };
 
-$saveNoteBtn.on("click", handleNoteSave);
+$saveNoteBtn.on("click", function() {
+  handleNoteSave();
+  location.reload();
+});
 $noteList.on("click", ".list-group-item", handleNoteView);
 $newNoteBtn.on("click", handleNewNoteView);
 $noteList.on("click", ".delete-note", handleNoteDelete);
@@ -154,3 +165,4 @@ $noteText.on("keyup", handleRenderSaveBtn);
 
 // Gets and renders the initial list of notes
 getAndRenderNotes();
+
