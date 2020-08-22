@@ -22,7 +22,8 @@ const saveNote = (note) => {
     url: "/api/notes",
     data: note,
     method: "POST",
-  });
+  })
+  
 };
 
 // A function for deleting a note from the db
@@ -30,7 +31,7 @@ const deleteNote = (id) => {
   return $.ajax({
     url: "api/notes/" + id,
     method: "DELETE",
-  });
+  })
 };
 
 // If there is an activeNote, display it, otherwise render empty inputs
@@ -62,11 +63,11 @@ console.log("testing")
     text: $noteText.val()
   };
   console.log("testing")
-  
+
   saveNote(newNote).then(() => {
     getAndRenderNotes();
+ 
     renderActiveNote();
-    
   });
 
   
@@ -78,6 +79,8 @@ const handleNoteDelete = function (event) {
   event.stopPropagation();
 
   const note = $(this).parent(".list-group-item").data();
+  console.log(note);
+  
 
   if (activeNote.id === note.id) {
     activeNote = {};
@@ -99,6 +102,7 @@ const handleNoteView = function () {
 // Sets the activeNote to and empty object and allows the user to enter a new note
 const handleNewNoteView = function () {
   activeNote = {};
+  
   renderActiveNote();
 };
 
@@ -114,8 +118,9 @@ const handleRenderSaveBtn = function () {
 
 // Render's the list of note titles
 const renderNoteList = (notes) => {
+  
   $noteList.empty();
-
+  
   const noteListItems = [];
 
   // Returns jquery object for li with given text and delete button
@@ -130,6 +135,7 @@ const renderNoteList = (notes) => {
         "<i class='fas fa-trash-alt float-right text-danger delete-note'>"
       );
       $li.append($delBtn);
+      
     }
     return $li;
   };
@@ -144,19 +150,22 @@ const renderNoteList = (notes) => {
   });
 
   $noteList.append(noteListItems);
+
   
 };
 
+const reloadPage = () => {
+  location.reload();
+}
+
 // Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => {
+  
   return getNotes().then(renderNoteList);
   
 };
 
-$saveNoteBtn.on("click", function() {
-  handleNoteSave();
-  location.reload();
-});
+$saveNoteBtn.on("click", handleNoteSave);
 $noteList.on("click", ".list-group-item", handleNoteView);
 $newNoteBtn.on("click", handleNewNoteView);
 $noteList.on("click", ".delete-note", handleNoteDelete);
@@ -165,4 +174,3 @@ $noteText.on("keyup", handleRenderSaveBtn);
 
 // Gets and renders the initial list of notes
 getAndRenderNotes();
-

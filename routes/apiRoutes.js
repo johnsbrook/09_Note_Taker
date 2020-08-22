@@ -11,7 +11,9 @@ module.exports = function (app) {
      res.json(notesData);
   });
 
+
   app.post("/api/notes", function (req, res) {
+
     fs.readFile("./db/db.json", (err, data) => {
       if (err) throw err;
       let notes = JSON.parse(data);
@@ -26,7 +28,23 @@ module.exports = function (app) {
           
         }
       });
+      location.reload();
     })
    
   });
+
+  app.get("/api/notes/:note", function(req, res) {
+    var chosen = req.params.note;
+  
+    console.log(chosen);
+  
+    for (var i = 0; i < notesData.length; i++) {
+      if (chosen === notesData[i].id) {
+        return res.json(notesData[i]);
+      }
+    }
+  
+    return res.json(false);
+  });
+
 };
