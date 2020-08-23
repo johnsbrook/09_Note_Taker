@@ -4,6 +4,7 @@
 // These data sources hold arrays of information on table-data, waitinglist, etc.
 var notesData = require("../db/db.json"); //C:\Users\falen\Desktop\homework\09_Note_Taker\db\db.json
 var fs = require("fs");
+var path = require('path');
 
 module.exports = function (app) {
   app.get("/api/notes", function (req, res) {
@@ -45,19 +46,19 @@ module.exports = function (app) {
     return res.json(false);
   });
 
-  app.delete("/api/notes/:id", function (req, res) {
-
-    var note = req.params.id;
-        note = note.filter(function(f){
-          return f.note !== parseInt(note);
-        })
-    
-    notesData = note;
-    res.json(note);
-
-
+  
+  app.delete('/api/notes/:id', function (req, res) {
+    const { id } = req.params;
+    var dataAfterDeleting = notesData.filter(note => note.id !== id);
+    fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(dataAfterDeleting), function(err){
+        if (err){
+            console.log("ERROR Creating new db.json");
+        }else{
+            console.log("SUCCESSFUL Deletion");
+        }
+    });
   });
 
-  
+
 
 };
