@@ -66,6 +66,7 @@ console.log("testing")
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();
+    
   });
 };
 
@@ -86,8 +87,9 @@ const handleNoteDelete = function (event) {
   deleteNote(note.id).then(() => {
     getAndRenderNotes();
     renderActiveNote();
+    
   });
-  
+ 
 };
 
 // Sets the activeNote and displays it
@@ -151,14 +153,13 @@ const renderNoteList = (notes) => {
   
 };
 
-const reloadPage = () => {
-  location.reload();
-}
 
 // Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => {
   
-  return getNotes().then(renderNoteList);
+  return getNotes().then(function(data) {
+    return renderNoteList(data);
+  });
   
 };
 

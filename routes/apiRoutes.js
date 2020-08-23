@@ -26,10 +26,11 @@ module.exports = function (app) {
           console.log("Error writing file", err);
         } else {
           console.log("Successfully wrote file");
+          
         }
       });
     })
-   
+    res.redirect('/api/notes');
   });
 
   app.get("/api/notes/:id", function(req, res) {
@@ -48,14 +49,13 @@ module.exports = function (app) {
 
   
   app.delete('/api/notes/:id', function (req, res) {
+
     const { id } = req.params;
+
     var newNotesData = notesData.filter(note => note.id !== id);
+
     fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(newNotesData), function(err){
-        if (err){
-            console.log("ERROR Creating new db.json");
-        }else{
-            console.log("SUCCESSFUL Deletion");
-        }
+        if (err) { console.log("Error"); } else { console.log("Note deleted"); }
     });
   });
 
