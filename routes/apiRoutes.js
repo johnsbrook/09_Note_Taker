@@ -2,7 +2,7 @@
 // LOAD DATA
 // We are linking our routes to a series of "data" sources.
 // These data sources hold arrays of information on table-data, waitinglist, etc.
- var notesData = require("../db/db.json"); //C:\Users\falen\Desktop\homework\09_Note_Taker\db\db.json
+var notesData = require("../db/db.json"); //C:\Users\falen\Desktop\homework\09_Note_Taker\db\db.json
 var fs = require("fs");
 
 module.exports = function (app) {
@@ -13,7 +13,7 @@ module.exports = function (app) {
 
 
   app.post("/api/notes", function (req, res) {
-
+    
     fs.readFile("./db/db.json", (err, data) => {
       if (err) throw err;
       let notes = JSON.parse(data);
@@ -25,26 +25,39 @@ module.exports = function (app) {
           console.log("Error writing file", err);
         } else {
           console.log("Successfully wrote file");
-          
         }
       });
-      location.reload();
     })
    
   });
 
-  app.get("/api/notes/:note", function(req, res) {
-    var chosen = req.params.note;
+  app.get("/api/notes/:id", function(req, res) {
+    var note = req.params.id;
   
-    console.log(chosen);
+    console.log(note);
   
     for (var i = 0; i < notesData.length; i++) {
-      if (chosen === notesData[i].id) {
+      if (note === notesData[i].id) {
         return res.json(notesData[i]);
       }
     }
   
     return res.json(false);
   });
+
+  app.delete("/api/notes/:id", function (req, res) {
+
+    var note = req.params.id;
+        note = note.filter(function(f){
+          return f.note !== parseInt(note);
+        })
+    
+    notesData = note;
+    res.json(note);
+
+
+  });
+
+  
 
 };

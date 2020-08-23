@@ -50,7 +50,6 @@ const renderActiveNote = () => {
     $noteText.val("");
   }
 
-  
 };
 
 // Get the n"tesote data from the inputs, save it to the db and update the view
@@ -66,12 +65,11 @@ console.log("testing")
 
   saveNote(newNote).then(() => {
     getAndRenderNotes();
- 
     renderActiveNote();
   });
-
-  
 };
+
+
 
 // Delete the clicked note
 const handleNoteDelete = function (event) {
@@ -81,7 +79,6 @@ const handleNoteDelete = function (event) {
   const note = $(this).parent(".list-group-item").data();
   console.log(note);
   
-
   if (activeNote.id === note.id) {
     activeNote = {};
   }
