@@ -49,8 +49,8 @@ module.exports = function (app) {
   
   app.delete('/api/notes/:id', function (req, res) {
     const { id } = req.params;
-    var dataAfterDeleting = notesData.filter(note => note.id !== id);
-    fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(dataAfterDeleting), function(err){
+    var newNotesData = notesData.filter(note => note.id !== id);
+    fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(newNotesData), function(err){
         if (err){
             console.log("ERROR Creating new db.json");
         }else{
