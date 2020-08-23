@@ -1,0 +1,2 @@
+$ heroku git:remote -a note-taker-nodejs
+set git remote heroku to https://git.heroku.com/note-taker-nodejs.git
