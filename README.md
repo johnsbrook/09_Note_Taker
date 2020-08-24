@@ -39,7 +39,7 @@ This is an application that can be used to write, save and delete notes. It uses
     
 ## Where to Contribute 
  
-You may send any requests through Heroku or GitHub below.  
+You may send any requests through Heroku or GitHub below. 
 
 
 ## Tests 
