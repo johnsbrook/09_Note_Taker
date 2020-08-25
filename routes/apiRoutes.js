@@ -1,10 +1,7 @@
-// ===============================================================================
-// LOAD DATA
-// We are linking our routes to a series of "data" sources.
-// These data sources hold arrays of information on table-data, waitinglist, etc.
-var notesData = require("../db/db.json"); //C:\Users\falen\Desktop\homework\09_Note_Taker\db\db.json
+var notesData = require("../db/db.json"); 
 var fs = require("fs");
 var path = require('path');
+var uuid = require("uuidv1");    
 
 module.exports = function (app) {
   app.get("/api/notes", function (req, res) {
@@ -14,24 +11,21 @@ module.exports = function (app) {
 
 
   app.post("/api/notes", function (req, res) {
-    
-    fs.readFile("./db/db.json", (err, data) => {
-      if (err) throw err;
-      let notes = JSON.parse(data);
+    let newNote = req.body;
+    const {title,text} = newNote;
+    let newNoteData = {title, text, id:uuid()};
 
-      notes.push(req.body);
-      const jsonString = JSON.stringify(notes);
-      fs.writeFile("./db/db.json", jsonString, (err) => {
-        if (err) {
-          console.log("Error writing file", err);
-        } else {
-          console.log("Successfully wrote file");
-          
-        }
-      });
-    })
-    res.redirect('/api/notes');
+    notesData.push(newNoteData);
+    res.json(notesData);
+    console.log("New note is being created.")
+
+      fs.writeFile("./db/db.json", JSON.stringify(notesData), (err) => {
+        if (err) throw err;
+        console.log("Note written");        
+      })
+
   });
+
 
   app.get("/api/notes/:id", function(req, res) {
     var note = req.params.id;
@@ -48,16 +42,23 @@ module.exports = function (app) {
   });
 
   
-  app.delete('/api/notes/:id', function (req, res) {
+  app.delete("/api/notes/:id", function (req, res) {
+    const id = req.params.id;
+    var newNotesData = notesData.filter((note) => note.id !== id);
 
-    const { id } = req.params;
+    fs.writeFile("./db/db.json", JSON.stringify(newNotesData), function (err) {
+        if (err) throw err;
+        console.log("Note deleted");
+        });
+        
+    notesData = newNotesData;
+    res.json(newNotesData);
+    console.log("The note has been removed.")
 
-    var newNotesData = notesData.filter(note => note.id !== id);
-
-    fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(newNotesData), function(err){
-        if (err) { console.log("Error"); } else { console.log("Note deleted"); }
-    });
   });
+
+
+ 
 
 
 

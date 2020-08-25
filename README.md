@@ -57,7 +57,7 @@ This repository is hosted in GitHub and you may access it at [http://github.com/
 [https://note-taker-nodejs.herokuapp.com/ ](https://note-taker-nodejs.herokuapp.com/ ) 
 
 
-## Questions 
+## Questions
  
 GitHub: [johnsbrook](https://github.com/johnsbrook) 
  
