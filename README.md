@@ -56,6 +56,8 @@ This repository is hosted in GitHub and you may access it at [http://github.com/
  
 [https://note-taker-nodejs.herokuapp.com/ ](https://note-taker-nodejs.herokuapp.com/ ) 
 
+[YouTube Video](https://youtu.be/cOx9jIDuetM)
+
 
 ## Questions
  
